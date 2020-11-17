@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.adhytia.carifi;
+package id.ac.ui.cs.mobileprogramming.adhytia.carifi.tvshow;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +61,7 @@ public class TvShowFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setTitle("TvShow");
         return inflater.inflate(R.layout.fragment_tv_show, container, false);
     }
 }
