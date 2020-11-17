@@ -1,9 +1,11 @@
 package id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.viewmodel;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.model.Movie;
@@ -15,16 +17,21 @@ public class MovieViewModel extends ViewModel {
     private MutableLiveData<List<Movie>> popularMovieList;
     private MovieRepository mRepo;
 
-    public void init() {
+    public void init(FragmentActivity activity) {
         if (popularMovieList != null) {
             return;
         }
-        mRepo = MovieRepository.getInstance();
-        popularMovieList = mRepo.getPopularMovies();
-        log.w("DEBUG1", String.valueOf(mRepo.getPopularMovies().getValue().size()));
+        popularMovieList = new MutableLiveData<>();
+        popularMovieList.setValue(new ArrayList<Movie>());
+        mRepo = MovieRepository.getInstance(activity, this);
+        mRepo.getPopularMovies();
     }
 
     public LiveData<List<Movie>> getPopularMovies(){
         return popularMovieList;
+    }
+
+    public void setPopularMovie(List<Movie> popularMovie){
+        popularMovieList.postValue(popularMovie);
     }
 }

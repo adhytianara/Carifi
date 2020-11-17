@@ -34,7 +34,7 @@ import static com.loopj.android.http.AsyncHttpClient.log;
  */
 public class MovieFragment extends Fragment {
     @BindView(R.id.rv_movies)
-    private RecyclerView rvMovies;
+    RecyclerView rvMovies;
 
     private MovieViewModel movieViewModel;
     private MovieListAdapter movieListAdapter;
@@ -94,21 +94,20 @@ public class MovieFragment extends Fragment {
 
         rvMovies.setHasFixedSize(true);
         movieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
-        movieViewModel.init();
+        movieViewModel.init(getActivity());
         showRecyclerList();
 
         movieViewModel.getPopularMovies().observe(getActivity(), new Observer<List<Movie>>() {
             @Override
             public void onChanged(List<Movie> movies) {
-                movieListAdapter.notifyDataSetChanged();
+                log.e("DEBUG", "Observer " + movies.size());
+                showRecyclerList();
             }
         });
     }
 
     private void showRecyclerList() {
-        log.w("DEBUG", String.valueOf(movieViewModel.getPopularMovies().getValue().size()));
         movieListAdapter = new MovieListAdapter(movieViewModel.getPopularMovies().getValue());
-//        rvMovies.setLayoutManager(new LinearLayoutManager(getActivity()));
         rvMovies.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         rvMovies.setAdapter(movieListAdapter);
 
