@@ -15,8 +15,10 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/essential_movies"
-            tools:src="@tools:sample/backgrounds/scenic" />
+            android:adjustViewBounds="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="50dp"
+            app:srcCompat="@drawable/essential_movies" />
 
         <SearchView
             android:id="@+id/search_view"
@@ -34,6 +36,7 @@
         android:id="@+id/tv_queryResult"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:text="Popular movies"
         android:textColor="@android:color/white"
         android:textSize="20sp" />

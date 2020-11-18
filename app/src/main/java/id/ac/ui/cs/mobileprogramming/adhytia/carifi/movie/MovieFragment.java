@@ -1,12 +1,12 @@
 package id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,10 +22,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.R;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.adapter.MovieListAdapter;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.activitydetails.MovieDetailsActivity;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.model.Movie;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.viewmodel.MovieViewModel;
-
-import static com.loopj.android.http.AsyncHttpClient.log;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -106,13 +105,6 @@ public class MovieFragment extends Fragment {
         movieViewModel.getMovieList().observe(getActivity(), new Observer<List<Movie>>() {
             @Override
             public void onChanged(List<Movie> movies) {
-                log.e("DEBUG", "Observer " + movies.size());
-                String currentlyDisplayed = movieViewModel.getCurrentlyDisplayed();
-                switch (currentlyDisplayed) {
-                    case "POPULAR":
-                        queryResult.setText(R.string.popular_movies);
-                        break;
-                }
                 showRecyclerList();
             }
         });
@@ -135,12 +127,13 @@ public class MovieFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText.isEmpty()) {
+                    queryResult.setText(R.string.popular_movies);
                     movieViewModel.searchPopularMovies();
                 } else {
+                    String searchResultText = String.format("%s '%s'", getString(R.string.search_result_text), newText);
+                    queryResult.setText(searchResultText);
                     movieViewModel.searchMovieByTitle(newText);
                 }
-                String searchResultText = String.format("%s '%s'", getString(R.string.search_result_text), newText);
-                queryResult.setText(searchResultText);
                 return false;
             }
         });
@@ -154,8 +147,9 @@ public class MovieFragment extends Fragment {
         movieListAdapter.setOnItemClickCallback(new MovieListAdapter.OnItemClickCallback() {
             @Override
             public void onItemClicked(Movie data) {
-//                listDestinationViewModel.moveToSelectedDestinationDetails(data, getFragmentManager());
-                Toast.makeText(getActivity(), data.getTitle(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
+                intent.putExtra(MovieDetailsActivity.DATA, data);
+                startActivity(intent);
             }
         });
     }

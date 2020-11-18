@@ -67,12 +67,28 @@ public class FetchAPIService extends IntentService {
                     JSONArray resultArray = jsonObject.getJSONArray("results");
                     for (int i = 0; i < resultArray.length(); i++) {
                         JSONObject movieObject = resultArray.getJSONObject(i);
-                        String title = movieObject.getString("title");
-                        String posterPath = movieObject.getString("poster_path");
-                        Movie movie = new Movie();
                         String baseImageURL = "https://image.tmdb.org/t/p/w500";
-                        movie.setPosterURL(baseImageURL + posterPath);
+
+                        int id = Integer.parseInt(movieObject.getString("id"));
+                        String title = movieObject.getString("title");
+                        String backdropPath = movieObject.getString("backdrop_path");
+                        String posterPath = movieObject.getString("poster_path");
+                        String overview = movieObject.getString("overview");
+                        String releaseDate = movieObject.getString("release_date");
+                        String voteAverage = movieObject.getString("vote_average");
+                        String voteCount = movieObject.getString("vote_count");
+                        String popularity = movieObject.getString("popularity");
+
+                        Movie movie = new Movie();
+                        movie.setId(id);
                         movie.setTitle(title);
+                        movie.setBackdropURL(baseImageURL + backdropPath);
+                        movie.setPosterURL(baseImageURL + posterPath);
+                        movie.setOverview(overview);
+                        movie.setReleaseDate(releaseDate);
+                        movie.setVoteAverage(voteAverage);
+                        movie.setVoteCount(voteCount);
+                        movie.setPopularity(popularity);
                         popularMovies.add(movie);
                     }
                 } catch (JSONException e) {
@@ -99,12 +115,28 @@ public class FetchAPIService extends IntentService {
                     JSONArray resultArray = jsonObject.getJSONArray("results");
                     for (int i = 0; i < resultArray.length(); i++) {
                         JSONObject movieObject = resultArray.getJSONObject(i);
-                        String title = movieObject.getString("title");
-                        String posterPath = movieObject.getString("poster_path");
-                        Movie movie = new Movie();
                         String baseImageURL = "https://image.tmdb.org/t/p/w500";
-                        movie.setPosterURL(baseImageURL + posterPath);
+
+                        int id = Integer.parseInt(movieObject.getString("id"));
+                        String title = movieObject.getString("title");
+                        String backdropPath = movieObject.getString("backdrop_path");
+                        String posterPath = movieObject.getString("poster_path");
+                        String overview = movieObject.getString("overview");
+                        String releaseDate = movieObject.getString("release_date");
+                        String voteAverage = movieObject.getString("vote_average");
+                        String voteCount = movieObject.getString("vote_count");
+                        String popularity = movieObject.getString("popularity");
+
+                        Movie movie = new Movie();
+                        movie.setId(id);
                         movie.setTitle(title);
+                        movie.setBackdropURL(baseImageURL + backdropPath);
+                        movie.setPosterURL(baseImageURL + posterPath);
+                        movie.setOverview(overview);
+                        movie.setReleaseDate(releaseDate);
+                        movie.setVoteAverage(voteAverage);
+                        movie.setVoteCount(voteCount);
+                        movie.setPopularity(popularity);
                         popularMovies.add(movie);
                     }
                 } catch (JSONException e) {

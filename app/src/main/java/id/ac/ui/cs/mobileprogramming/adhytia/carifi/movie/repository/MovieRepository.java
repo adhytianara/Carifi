@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
 
@@ -13,8 +12,6 @@ import java.util.ArrayList;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.FetchAPIService;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.model.Movie;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.viewmodel.MovieViewModel;
-
-import static com.loopj.android.http.AsyncHttpClient.log;
 
 
 public class MovieRepository {
