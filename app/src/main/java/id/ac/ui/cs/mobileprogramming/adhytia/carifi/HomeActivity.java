@@ -17,14 +17,14 @@ import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.MovieFragment;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.people.PeopleFragment;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.tvshow.TvShowFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
     @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home);
 
         ButterKnife.bind(this);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
