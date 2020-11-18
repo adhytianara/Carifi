@@ -103,17 +103,14 @@ public class MovieFragment extends Fragment {
         movieViewModel.init(getActivity());
         showRecyclerList();
 
-        movieViewModel.getPopularMovies().observe(getActivity(), new Observer<List<Movie>>() {
+        movieViewModel.getMovieList().observe(getActivity(), new Observer<List<Movie>>() {
             @Override
             public void onChanged(List<Movie> movies) {
                 log.e("DEBUG", "Observer " + movies.size());
                 String currentlyDisplayed = movieViewModel.getCurrentlyDisplayed();
-                switch (currentlyDisplayed){
+                switch (currentlyDisplayed) {
                     case "POPULAR":
-                        queryResult.setText("Popular movies");
-                        break;
-                    case "SEARCH_RESULT":
-                        queryResult.setText("Your search result for '....'");
+                        queryResult.setText(R.string.popular_movies);
                         break;
                 }
                 showRecyclerList();
@@ -128,7 +125,7 @@ public class MovieFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (query.isEmpty()) {
-                    movieViewModel.getPopularMovies();
+                    movieViewModel.searchPopularMovies();
                 } else {
                     movieViewModel.searchMovieByTitle(query);
                 }
@@ -138,18 +135,19 @@ public class MovieFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText.isEmpty()) {
-                    movieViewModel.getPopularMovies();
+                    movieViewModel.searchPopularMovies();
                 } else {
                     movieViewModel.searchMovieByTitle(newText);
                 }
+                String searchResultText = String.format("%s '%s'", getString(R.string.search_result_text), newText);
+                queryResult.setText(searchResultText);
                 return false;
             }
         });
     }
 
     private void showRecyclerList() {
-        movieListAdapter = new MovieListAdapter(movieViewModel.getPopularMovies().getValue());
-//        movieListAdapter = new MovieListAdapter(movieViewModel.getMovieList().getValue());
+        movieListAdapter = new MovieListAdapter(movieViewModel.getMovieList().getValue());
         rvMovies.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         rvMovies.setAdapter(movieListAdapter);
 

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Carifi</string>
+    <string name="popular_movies">Popular movies</string>
+    <string name="search_result_text">Your search result for </string>
 </resources>
