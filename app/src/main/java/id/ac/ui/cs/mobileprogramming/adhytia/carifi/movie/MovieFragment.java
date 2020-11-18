@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -12,14 +14,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.MainActivity;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.R;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.adapter.MovieListAdapter;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.model.Movie;
@@ -35,6 +35,12 @@ import static com.loopj.android.http.AsyncHttpClient.log;
 public class MovieFragment extends Fragment {
     @BindView(R.id.rv_movies)
     RecyclerView rvMovies;
+
+    @BindView(R.id.search_view)
+    SearchView searchView;
+
+    @BindView(R.id.tv_queryResult)
+    TextView queryResult;
 
     private MovieViewModel movieViewModel;
     private MovieListAdapter movieListAdapter;
@@ -101,13 +107,49 @@ public class MovieFragment extends Fragment {
             @Override
             public void onChanged(List<Movie> movies) {
                 log.e("DEBUG", "Observer " + movies.size());
+                String currentlyDisplayed = movieViewModel.getCurrentlyDisplayed();
+                switch (currentlyDisplayed){
+                    case "POPULAR":
+                        queryResult.setText("Popular movies");
+                        break;
+                    case "SEARCH_RESULT":
+                        queryResult.setText("Your search result for '....'");
+                        break;
+                }
                 showRecyclerList();
+            }
+        });
+
+        searchViewListener();
+    }
+
+    private void searchViewListener() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (query.isEmpty()) {
+                    movieViewModel.getPopularMovies();
+                } else {
+                    movieViewModel.searchMovieByTitle(query);
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText.isEmpty()) {
+                    movieViewModel.getPopularMovies();
+                } else {
+                    movieViewModel.searchMovieByTitle(newText);
+                }
+                return false;
             }
         });
     }
 
     private void showRecyclerList() {
         movieListAdapter = new MovieListAdapter(movieViewModel.getPopularMovies().getValue());
+//        movieListAdapter = new MovieListAdapter(movieViewModel.getMovieList().getValue());
         rvMovies.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         rvMovies.setAdapter(movieListAdapter);
 
