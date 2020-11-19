@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -17,10 +18,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.R;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.model.Movie;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.viewmodel.MovieDetailsViewModel;
 
 public class MovieDetailsActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String DATA = "data";
     private Movie data;
+    private MovieDetailsViewModel movieDetailsViewModel;
 
     @BindView(R.id.img_backdrop)
     ImageView imgBackdrop;
@@ -60,12 +63,17 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
         data = getIntent().getParcelableExtra(DATA);
         setTitle(data.getTitle());
         ButterKnife.bind(this);
-        diplayMovieData(data);
 
+        movieDetailsViewModel = ViewModelProviders.of(this).get(MovieDetailsViewModel.class);
+        movieDetailsViewModel.init(data, this);
         btnFavorite.setOnClickListener(this);
+
+        diplayMovieData(data);
     }
 
     private void diplayMovieData(Movie data) {
+        boolean movieIsSaved = movieDetailsViewModel.isSaved();
+        btnFavorite.setBackgroundResource(movieIsSaved ? R.drawable.ic_favorite : R.drawable.ic_favorite_border);
         Glide.with(this)
                 .load(data.getPosterURL())
                 .apply(new RequestOptions().override(200, 200))
@@ -95,7 +103,15 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_favorite:
-
+                if (movieDetailsViewModel.isSaved()) {
+//                    movieDetailsViewModel.setSaved(false);
+                    movieDetailsViewModel.deleteMovieById(this);
+                    btnFavorite.setBackgroundResource(R.drawable.ic_favorite_border);
+                } else {
+//                    movieDetailsViewModel.setSaved(true);
+                    movieDetailsViewModel.saveMovietoDb(this);
+                    btnFavorite.setBackgroundResource(R.drawable.ic_favorite);
+                }
                 break;
         }
     }

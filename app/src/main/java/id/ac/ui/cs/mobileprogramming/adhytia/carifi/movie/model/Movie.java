@@ -3,15 +3,49 @@ package id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Movie implements Parcelable {
-    private int id;
-    private String title, overview, posterURL, backdropURL, releaseDate, voteAverage, voteCount, popularity;
+
+    @PrimaryKey(autoGenerate = true)
+    private int _id;
+
+    @ColumnInfo(name = "movie_id")
+    private int movieId;
+
+    @ColumnInfo(name = "title")
+    private String title;
+
+    @ColumnInfo(name = "overview")
+    private String overview;
+
+    @ColumnInfo(name = "poster_url")
+    private String posterURL;
+
+    @ColumnInfo(name = "backdrop_url")
+    private String backdropURL;
+
+    @ColumnInfo(name = "release_date")
+    private String releaseDate;
+
+    @ColumnInfo(name = "vote_average")
+    private String voteAverage;
+
+    @ColumnInfo(name = "vote_count")
+    private String voteCount;
+
+    @ColumnInfo(name = "popularity")
+    private String popularity;
+
 
     public Movie() {
     }
 
     protected Movie(Parcel in) {
-        id = in.readInt();
+        movieId = in.readInt();
         title = in.readString();
         overview = in.readString();
         posterURL = in.readString();
@@ -34,12 +68,20 @@ public class Movie implements Parcelable {
         }
     };
 
-    public int getId() {
-        return id;
+    public int get_id() {
+        return _id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void set_id(int _id) {
+        this._id = _id;
+    }
+
+    public int getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
     }
 
     public String getBackdropURL() {
@@ -113,7 +155,7 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeInt(movieId);
         dest.writeString(title);
         dest.writeString(overview);
         dest.writeString(posterURL);
