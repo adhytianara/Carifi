@@ -117,9 +117,12 @@ public class MovieFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (query.isEmpty()) {
-                    movieViewModel.searchPopularMovies();
+                    queryResult.setText(R.string.popular_movies);
+                    movieViewModel.searchPopularMovies(getActivity());
                 } else {
-                    movieViewModel.searchMovieByTitle(query);
+                    String searchResultText = String.format("%s '%s'", getString(R.string.search_result_text), query);
+                    queryResult.setText(searchResultText);
+                    movieViewModel.searchMovieByTitle(query, getActivity());
                 }
                 return false;
             }
@@ -128,11 +131,7 @@ public class MovieFragment extends Fragment {
             public boolean onQueryTextChange(String newText) {
                 if (newText.isEmpty()) {
                     queryResult.setText(R.string.popular_movies);
-                    movieViewModel.searchPopularMovies();
-                } else {
-                    String searchResultText = String.format("%s '%s'", getString(R.string.search_result_text), newText);
-                    queryResult.setText(searchResultText);
-                    movieViewModel.searchMovieByTitle(newText);
+                    movieViewModel.searchPopularMovies(getActivity());
                 }
                 return false;
             }

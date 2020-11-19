@@ -1,56 +1,61 @@
 package id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.repository;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
 import androidx.fragment.app.FragmentActivity;
+import androidx.room.Room;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.FetchAPIService;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.database.MovieDao;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.database.MovieDatabase;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.model.Movie;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.viewmodel.MovieDetailsViewModel;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.viewmodel.MovieViewModel;
 
 
 public class MovieRepository {
     private BroadcastReceiver fetchReceiver;
     private static MovieRepository instance;
-    private static FragmentActivity mActivity;
     private static MovieViewModel movieViewModel;
+    private static MovieDetailsViewModel movieDetailsViewModel;
+    private static MovieDao movieDao;
     public static final String ACTION_FETCH = "action_fetch";
     public static final String FETCH_RESULT = "fetch_result";
     public static final String FETCH_TYPE = "fetch_type";
     public static final String MOVIES_TITLE = "movies_title";
 
-    public static MovieRepository getInstance(FragmentActivity activity, MovieViewModel viewModel) {
-        mActivity = activity;
-        movieViewModel = viewModel;
+    public static MovieRepository getInstance() {
         if (instance == null) {
             instance = new MovieRepository();
         }
         return instance;
     }
 
-    public void searchPopularMovies() {
-        registerBroadcastReceiver();
+    public void searchPopularMovies(FragmentActivity activity) {
+        registerBroadcastReceiver(activity);
 
-        Intent fetchServiceIntent = new Intent(mActivity, FetchAPIService.class);
+        Intent fetchServiceIntent = new Intent(activity, FetchAPIService.class);
         fetchServiceIntent.putExtra(FETCH_TYPE, 1);
-        mActivity.startService(fetchServiceIntent);
+        activity.startService(fetchServiceIntent);
     }
 
-    public void searchMovieByTitle(String title) {
-        registerBroadcastReceiver();
+    public void searchMovieByTitle(String title, FragmentActivity activity) {
+        registerBroadcastReceiver(activity);
 
-        Intent fetchServiceIntent = new Intent(mActivity, FetchAPIService.class);
+        Intent fetchServiceIntent = new Intent(activity, FetchAPIService.class);
         fetchServiceIntent.putExtra(FETCH_TYPE, 2);
         fetchServiceIntent.putExtra(MOVIES_TITLE, title);
-        mActivity.startService(fetchServiceIntent);
+        activity.startService(fetchServiceIntent);
     }
 
-    private void registerBroadcastReceiver() {
+    private void registerBroadcastReceiver(FragmentActivity activity) {
         fetchReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -59,6 +64,47 @@ public class MovieRepository {
             }
         };
         IntentFilter fetchIntentFilter = new IntentFilter(ACTION_FETCH);
-        mActivity.registerReceiver(fetchReceiver, fetchIntentFilter);
+        activity.registerReceiver(fetchReceiver, fetchIntentFilter);
+    }
+
+    public void setMovieViewModel(MovieViewModel viewModel) {
+        movieViewModel = viewModel;
+    }
+
+    public void setMovieDetailsViewModel(MovieDetailsViewModel viewModel) {
+        movieDetailsViewModel = viewModel;
+    }
+
+    private void initRoom(Activity activity) {
+        movieDao = Room.databaseBuilder(activity, MovieDatabase.class, "movie")
+                .allowMainThreadQueries()
+                .build()
+                .movieDao();
+    }
+
+    public List<Movie> getAllMovieFromDb(Activity mActivity) {
+        initRoom(mActivity);
+        List<Movie> movieList = movieDao.getAll();
+        return movieList;
+    }
+
+    public void saveMovietoDb(Movie data, Activity mActivity) {
+        movieDao.insert(data);
+        movieDetailsViewModel.setSaved(true);
+    }
+
+    public void getMovieById(int id, Activity mActivity) {
+        initRoom(mActivity);
+        Movie movie = movieDao.getById(id);
+        if (movie != null) {
+            movieDetailsViewModel.setSaved(true);
+        } else {
+            movieDetailsViewModel.setSaved(false);
+        }
+    }
+
+    public void deleteMovieById(Movie data, Activity mActivity) {
+        movieDao.deleteById(data.get_id());
+        movieDetailsViewModel.setSaved(false);
     }
 }

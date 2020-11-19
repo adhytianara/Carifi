@@ -11,6 +11,8 @@ import java.util.List;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.model.Movie;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.repository.MovieRepository;
 
+import static com.loopj.android.http.AsyncHttpClient.log;
+
 public class MovieViewModel extends ViewModel {
     private MutableLiveData<List<Movie>> movieList;
     private MovieRepository mRepo;
@@ -22,8 +24,9 @@ public class MovieViewModel extends ViewModel {
         }
         movieList = new MutableLiveData<>();
         movieList.setValue(new ArrayList<Movie>());
-        mRepo = MovieRepository.getInstance(activity, this);
-        searchPopularMovies();
+        mRepo = MovieRepository.getInstance();
+        mRepo.setMovieViewModel(this);
+        searchPopularMovies(activity);
     }
 
     public LiveData<List<Movie>> getMovieList(){
@@ -31,17 +34,17 @@ public class MovieViewModel extends ViewModel {
     }
 
     public void setMovieList(List<Movie> movieList){
-        this.movieList.postValue(movieList);
+        this.movieList.setValue(movieList);
     }
 
-    public void searchPopularMovies(){
+    public void searchPopularMovies(FragmentActivity activity){
         currentlyDisplayed = "POPULAR";
-        mRepo.searchPopularMovies();
+        mRepo.searchPopularMovies(activity);
     }
 
-    public void searchMovieByTitle(String title) {
+    public void searchMovieByTitle(String title, FragmentActivity activity) {
         currentlyDisplayed = "SEARCH_RESULT";
-        mRepo.searchMovieByTitle(title);
+        mRepo.searchMovieByTitle(title, activity);
     }
 
     public String getCurrentlyDisplayed() {
