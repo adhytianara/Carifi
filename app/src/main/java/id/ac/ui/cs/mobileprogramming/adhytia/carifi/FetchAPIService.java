@@ -68,11 +68,16 @@ public class FetchAPIService extends IntentService {
                     for (int i = 0; i < resultArray.length(); i++) {
                         JSONObject movieObject = resultArray.getJSONObject(i);
                         String baseImageURL = "https://image.tmdb.org/t/p/w500";
+                        String noImage = "https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg";
 
                         int id = Integer.parseInt(movieObject.getString("id"));
                         String title = movieObject.getString("title");
                         String backdropPath = movieObject.getString("backdrop_path");
+                        backdropPath = backdropPath.equals("null") ? noImage : baseImageURL + backdropPath;
+                        log.e("DEBUG", title);
+                        log.e("DEBUG", backdropPath);
                         String posterPath = movieObject.getString("poster_path");
+                        posterPath = posterPath.equals("null") ? noImage : baseImageURL + posterPath;
                         String overview = movieObject.getString("overview");
                         String releaseDate = movieObject.getString("release_date");
                         String voteAverage = movieObject.getString("vote_average");
@@ -80,10 +85,10 @@ public class FetchAPIService extends IntentService {
                         String popularity = movieObject.getString("popularity");
 
                         Movie movie = new Movie();
-                        movie.setId(id);
+                        movie.setMovieId(id);
                         movie.setTitle(title);
-                        movie.setBackdropURL(baseImageURL + backdropPath);
-                        movie.setPosterURL(baseImageURL + posterPath);
+                        movie.setBackdropURL(backdropPath);
+                        movie.setPosterURL(posterPath);
                         movie.setOverview(overview);
                         movie.setReleaseDate(releaseDate);
                         movie.setVoteAverage(voteAverage);
@@ -128,7 +133,7 @@ public class FetchAPIService extends IntentService {
                         String popularity = movieObject.getString("popularity");
 
                         Movie movie = new Movie();
-                        movie.setId(id);
+                        movie.setMovieId(id);
                         movie.setTitle(title);
                         movie.setBackdropURL(baseImageURL + backdropPath);
                         movie.setPosterURL(baseImageURL + posterPath);
