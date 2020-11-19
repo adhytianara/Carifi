@@ -1,10 +1,11 @@
-package id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.repository;
+package id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.repository;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.room.Room;
@@ -12,19 +13,20 @@ import androidx.room.Room;
 import java.util.ArrayList;
 import java.util.List;
 
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.FetchAPIService;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.database.MovieDao;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.database.MovieDatabase;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.model.Movie;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.viewmodel.MovieDetailsViewModel;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.viewmodel.MovieViewModel;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.favoritepage.viewmodel.FavoriteMovieViewModel;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.service.FetchAPIService;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.database.MovieDao;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.database.MovieDatabase;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.model.Movie;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.viewmodel.MovieDetailsViewModel;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.viewmodel.MovieViewModel;
+
+import static com.loopj.android.http.AsyncHttpClient.log;
 
 
 public class MovieRepository {
     private BroadcastReceiver fetchReceiver;
     private static MovieRepository instance;
-    private static MovieViewModel movieViewModel;
-    private static MovieDetailsViewModel movieDetailsViewModel;
     private static MovieDao movieDao;
     public static final String ACTION_FETCH = "action_fetch";
     public static final String FETCH_RESULT = "fetch_result";
@@ -38,16 +40,16 @@ public class MovieRepository {
         return instance;
     }
 
-    public void searchPopularMovies(FragmentActivity activity) {
-        registerBroadcastReceiver(activity);
+    public void searchPopularMovies(FragmentActivity activity, MovieViewModel movieViewModel) {
+        registerBroadcastReceiver(activity, movieViewModel);
 
         Intent fetchServiceIntent = new Intent(activity, FetchAPIService.class);
         fetchServiceIntent.putExtra(FETCH_TYPE, 1);
         activity.startService(fetchServiceIntent);
     }
 
-    public void searchMovieByTitle(String title, FragmentActivity activity) {
-        registerBroadcastReceiver(activity);
+    public void searchMovieByTitle(String title, FragmentActivity activity, MovieViewModel movieViewModel) {
+        registerBroadcastReceiver(activity, movieViewModel);
 
         Intent fetchServiceIntent = new Intent(activity, FetchAPIService.class);
         fetchServiceIntent.putExtra(FETCH_TYPE, 2);
@@ -55,7 +57,7 @@ public class MovieRepository {
         activity.startService(fetchServiceIntent);
     }
 
-    private void registerBroadcastReceiver(FragmentActivity activity) {
+    private void registerBroadcastReceiver(FragmentActivity activity, final MovieViewModel movieViewModel) {
         fetchReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -67,14 +69,6 @@ public class MovieRepository {
         activity.registerReceiver(fetchReceiver, fetchIntentFilter);
     }
 
-    public void setMovieViewModel(MovieViewModel viewModel) {
-        movieViewModel = viewModel;
-    }
-
-    public void setMovieDetailsViewModel(MovieDetailsViewModel viewModel) {
-        movieDetailsViewModel = viewModel;
-    }
-
     private void initRoom(Activity activity) {
         movieDao = Room.databaseBuilder(activity, MovieDatabase.class, "movie")
                 .allowMainThreadQueries()
@@ -82,20 +76,23 @@ public class MovieRepository {
                 .movieDao();
     }
 
-    public List<Movie> getAllMovieFromDb(Activity mActivity) {
+    public List<Movie> getAllMovieFromDb(Activity mActivity, FavoriteMovieViewModel favoriteMovieViewModel) {
         initRoom(mActivity);
         List<Movie> movieList = movieDao.getAll();
+        favoriteMovieViewModel.setMovieList(movieList);
         return movieList;
     }
 
-    public void saveMovietoDb(Movie data, Activity mActivity) {
+    public void saveMovietoDb(Movie data, Activity mActivity, MovieDetailsViewModel movieDetailsViewModel) {
+        initRoom(mActivity);
         movieDao.insert(data);
         movieDetailsViewModel.setSaved(true);
     }
 
-    public void getMovieById(int id, Activity mActivity) {
+    public void getMovieById(int id, Activity mActivity, MovieDetailsViewModel movieDetailsViewModel) {
         initRoom(mActivity);
-        Movie movie = movieDao.getById(id);
+        Movie movie = movieDao.getByMovieId(id);
+
         if (movie != null) {
             movieDetailsViewModel.setSaved(true);
         } else {
@@ -103,8 +100,9 @@ public class MovieRepository {
         }
     }
 
-    public void deleteMovieById(Movie data, Activity mActivity) {
-        movieDao.deleteById(data.get_id());
+    public void deleteMovieById(int id, Activity mActivity, MovieDetailsViewModel movieDetailsViewModel) {
+        initRoom(mActivity);
+        movieDao.deleteByMovieId(id);
         movieDetailsViewModel.setSaved(false);
     }
 }

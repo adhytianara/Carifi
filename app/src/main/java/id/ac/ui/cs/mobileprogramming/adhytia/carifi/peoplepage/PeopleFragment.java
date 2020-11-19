@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.adhytia.carifi.people;
+package id.ac.ui.cs.mobileprogramming.adhytia.carifi.peoplepage;
 
 import android.os.Bundle;
 

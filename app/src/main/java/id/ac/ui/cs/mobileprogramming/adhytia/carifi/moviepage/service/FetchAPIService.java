@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.adhytia.carifi;
+package id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.service;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -13,8 +13,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.model.Movie;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.repository.MovieRepository;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.model.Movie;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.repository.MovieRepository;
 
 import static com.loopj.android.http.AsyncHttpClient.log;
 
@@ -74,8 +74,6 @@ public class FetchAPIService extends IntentService {
                         String title = movieObject.getString("title");
                         String backdropPath = movieObject.getString("backdrop_path");
                         backdropPath = backdropPath.equals("null") ? noImage : baseImageURL + backdropPath;
-                        log.e("DEBUG", title);
-                        log.e("DEBUG", backdropPath);
                         String posterPath = movieObject.getString("poster_path");
                         posterPath = posterPath.equals("null") ? noImage : baseImageURL + posterPath;
                         String overview = movieObject.getString("overview");

@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.viewmodel;
+package id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.viewmodel;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
@@ -8,15 +8,12 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.model.Movie;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.repository.MovieRepository;
-
-import static com.loopj.android.http.AsyncHttpClient.log;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.model.Movie;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.repository.MovieRepository;
 
 public class MovieViewModel extends ViewModel {
     private MutableLiveData<List<Movie>> movieList;
     private MovieRepository mRepo;
-    private String currentlyDisplayed;
 
     public void init(FragmentActivity activity) {
         if (movieList != null) {
@@ -25,7 +22,6 @@ public class MovieViewModel extends ViewModel {
         movieList = new MutableLiveData<>();
         movieList.setValue(new ArrayList<Movie>());
         mRepo = MovieRepository.getInstance();
-        mRepo.setMovieViewModel(this);
         searchPopularMovies(activity);
     }
 
@@ -38,16 +34,10 @@ public class MovieViewModel extends ViewModel {
     }
 
     public void searchPopularMovies(FragmentActivity activity){
-        currentlyDisplayed = "POPULAR";
-        mRepo.searchPopularMovies(activity);
+        mRepo.searchPopularMovies(activity, this);
     }
 
     public void searchMovieByTitle(String title, FragmentActivity activity) {
-        currentlyDisplayed = "SEARCH_RESULT";
-        mRepo.searchMovieByTitle(title, activity);
-    }
-
-    public String getCurrentlyDisplayed() {
-        return currentlyDisplayed;
+        mRepo.searchMovieByTitle(title, activity, this);
     }
 }

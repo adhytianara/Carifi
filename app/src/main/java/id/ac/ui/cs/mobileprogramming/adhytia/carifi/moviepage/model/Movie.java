@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.model;
+package id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

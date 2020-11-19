@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.adapter;
+package id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +16,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.R;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.model.Movie;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.model.Movie;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ListViewHolder> {
     private List<Movie> listMovie;
@@ -33,7 +33,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.List
     @NonNull
     @Override
     public MovieListAdapter.ListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_row, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_row_homepage, viewGroup, false);
         return new ListViewHolder(view);
     }
 

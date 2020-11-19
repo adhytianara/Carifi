@@ -11,10 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".movie.activitydetails.MovieDetailsActivity"></activity>
+        <activity android:name=".favoritepage.FavoriteActivity"></activity>
+        <activity android:name=".moviepage.activitydetails.MovieDetailsActivity" />
 
         <service
-            android:name=".FetchAPIService"
+            android:name=".moviepage.service.FetchAPIService"
             android:exported="false" />
 
         <activity

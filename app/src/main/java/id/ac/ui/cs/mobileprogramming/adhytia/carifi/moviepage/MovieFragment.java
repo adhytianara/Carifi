@@ -1,12 +1,14 @@
-package id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie;
+package id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,10 +23,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.R;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.adapter.MovieListAdapter;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.activitydetails.MovieDetailsActivity;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.model.Movie;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.viewmodel.MovieViewModel;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.adapter.MovieListAdapter;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.activitydetails.MovieDetailsActivity;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.model.Movie;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.viewmodel.MovieViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,6 +84,12 @@ public class MovieFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        searchView.clearFocus();
     }
 
     @Override

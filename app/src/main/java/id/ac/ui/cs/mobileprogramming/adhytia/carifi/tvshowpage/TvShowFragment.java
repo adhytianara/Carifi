@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.adhytia.carifi.tvshow;
+package id.ac.ui.cs.mobileprogramming.adhytia.carifi.tvshowpage;
 
 import android.os.Bundle;
 

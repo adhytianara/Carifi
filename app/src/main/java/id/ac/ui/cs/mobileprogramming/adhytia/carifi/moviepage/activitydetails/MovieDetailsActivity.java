@@ -1,24 +1,32 @@
-package id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.activitydetails;
+package id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.activitydetails;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.facebook.stetho.Stetho;
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.HomeActivity;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.R;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.model.Movie;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.viewmodel.MovieDetailsViewModel;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.favoritepage.FavoriteActivity;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.model.Movie;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.viewmodel.MovieDetailsViewModel;
+import okhttp3.OkHttpClient;
 
 public class MovieDetailsActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String DATA = "data";
@@ -60,6 +68,8 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
 
+        initStetho();
+
         data = getIntent().getParcelableExtra(DATA);
         setTitle(data.getTitle());
         ButterKnife.bind(this);
@@ -69,6 +79,13 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
         btnFavorite.setOnClickListener(this);
 
         diplayMovieData(data);
+    }
+
+    private void initStetho() {
+        Stetho.initializeWithDefaults(this);
+        new OkHttpClient.Builder()
+                .addNetworkInterceptor(new StethoInterceptor())
+                .build();
     }
 
     private void diplayMovieData(Movie data) {
@@ -100,12 +117,27 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
     }
 
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_favorite:
+                Intent favorite = new Intent(MovieDetailsActivity.this, FavoriteActivity.class);
+                startActivity(favorite);
+                break;
+            case R.id.menu_settings:
+//                Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
+//                startActivity(mIntent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_favorite:
                 if (movieDetailsViewModel.isSaved()) {
 //                    movieDetailsViewModel.setSaved(false);
-                    movieDetailsViewModel.deleteMovieById(this);
+                    movieDetailsViewModel.deleteMovieByMovieId(this);
                     btnFavorite.setBackgroundResource(R.drawable.ic_favorite_border);
                 } else {
 //                    movieDetailsViewModel.setSaved(true);
