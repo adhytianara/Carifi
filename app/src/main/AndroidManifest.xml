@@ -6,12 +6,12 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_carifi"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_carifi_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".favoritepage.FavoriteActivity"></activity>
+        <activity android:name=".favoritepage.FavoriteActivity" />
         <activity android:name=".moviepage.activitydetails.MovieDetailsActivity" />
 
         <service
