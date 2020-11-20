@@ -20,7 +20,7 @@ import static com.loopj.android.http.AsyncHttpClient.log;
 
 public class FetchAPIService extends IntentService {
 
-    private ArrayList<Movie> popularMovies = new ArrayList<>();
+    private ArrayList<Movie> movieList = new ArrayList<>();
 
     public FetchAPIService() {
         super("FetchAPIService");
@@ -30,6 +30,7 @@ public class FetchAPIService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
             try {
+                // Untuk uji lost focus
                 Thread.sleep(0);
                 fetchBasedOnType(intent);
             } catch (InterruptedException e) {
@@ -37,7 +38,7 @@ public class FetchAPIService extends IntentService {
             }
 
             Intent notifyFinishIntent = new Intent(MovieRepository.ACTION_FETCH);
-            notifyFinishIntent.putParcelableArrayListExtra(MovieRepository.FETCH_RESULT, popularMovies);
+            notifyFinishIntent.putParcelableArrayListExtra(MovieRepository.FETCH_RESULT, movieList);
             sendBroadcast(notifyFinishIntent);
         }
     }
@@ -92,7 +93,7 @@ public class FetchAPIService extends IntentService {
                         movie.setVoteAverage(voteAverage);
                         movie.setVoteCount(voteCount);
                         movie.setPopularity(popularity);
-                        popularMovies.add(movie);
+                        movieList.add(movie);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -140,7 +141,7 @@ public class FetchAPIService extends IntentService {
                         movie.setVoteAverage(voteAverage);
                         movie.setVoteCount(voteCount);
                         movie.setPopularity(popularity);
-                        popularMovies.add(movie);
+                        movieList.add(movie);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
