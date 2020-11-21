@@ -86,7 +86,7 @@ public class TvShowFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (query.isEmpty()) {
-                    queryResult.setText(R.string.popular_TvShow);
+                    queryResult.setText(R.string.popular_tvshow);
                     TvShowViewModel.searchPopularTvShow(getActivity());
                 } else {
                     String searchResultText = String.format("%s '%s'", getString(R.string.search_result_text), query);
@@ -99,7 +99,7 @@ public class TvShowFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText.isEmpty()) {
-                    queryResult.setText(R.string.popular_TvShow);
+                    queryResult.setText(R.string.popular_tvshow);
                     TvShowViewModel.searchPopularTvShow(getActivity());
                 }
                 return false;
