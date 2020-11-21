@@ -22,4 +22,10 @@
     <string name="save">Save</string>
     <string name="change_language">Click here to change your language</string>
     <string name="search_movies">Search movies</string>
+    <string name="search_popular_people">Search popular people</string>
+    <string name="popular_people">Popular people</string>
+    <string name="gender">"Gender: "</string>
+    <string name="department">"Department: "</string>
+    <string name="female">"Female"</string>
+    <string name="male">"Male"</string>
 </resources>

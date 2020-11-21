@@ -52,7 +52,7 @@ public class HomeActivity extends AppCompatActivity {
                 Intent favorite = new Intent(HomeActivity.this, FavoriteActivity.class);
                 startActivity(favorite);
                 break;
-            case R.id.menu_settings:
+            case R.id.menu_profile:
                 Intent profile = new Intent(HomeActivity.this, ProfileActivity.class);
                 startActivity(profile);
                 break;

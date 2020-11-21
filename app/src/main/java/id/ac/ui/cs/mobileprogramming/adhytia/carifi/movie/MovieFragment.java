@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -27,8 +26,6 @@ import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.adapter.MovieListAdapt
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.model.Movie;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.moviedetails.MovieDetailsActivity;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.viewmodel.MovieViewModel;
-
-import static com.loopj.android.http.AsyncHttpClient.log;
 
 public class MovieFragment extends Fragment {
     @BindView(R.id.rv_movies)

@@ -17,9 +17,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.R;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.favorite.adapter.FavoriteMovieAdapter;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.favorite.viewmodel.FavoriteMovieViewModel;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.favorite.adapter.FavoritePeopleAdapter;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.favorite.viewmodel.FavoriteItemViewModel;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.moviedetails.MovieDetailsActivity;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.model.Movie;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.people.model.People;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.people.peopledetails.PeopleDetailsActivity;
 
 public class FavoriteActivity extends AppCompatActivity {
     @BindView(R.id.rv_favorite_movies)
@@ -31,7 +34,22 @@ public class FavoriteActivity extends AppCompatActivity {
     @BindView(R.id.tv_have_favorite)
     TextView tvHaveFavorite;
 
-    private FavoriteMovieViewModel favoriteMovieViewModel;
+    @BindView(R.id.rv_favorite_tvshow)
+    RecyclerView rvFavoriteTvShow;
+
+    @BindView(R.id.tv_favorite_tvshow)
+    TextView tvFavoriteTvShow;
+
+    @BindView(R.id.rv_favorite_people)
+    RecyclerView rvFavoritePeople;
+
+    @BindView(R.id.tv_favorite_people)
+    TextView tvFavoritePeople;
+
+    private List<Movie> movieList;
+    private List<People> peopleList;
+
+    private FavoriteItemViewModel favoriteItemViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +59,22 @@ public class FavoriteActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         rvFavoriteMovies.setHasFixedSize(true);
-        favoriteMovieViewModel = ViewModelProviders.of(this).get(FavoriteMovieViewModel.class);
-        favoriteMovieViewModel.init(this);
-        showRecyclerList();
+        rvFavoritePeople.setHasFixedSize(true);
+        favoriteItemViewModel = ViewModelProviders.of(this).get(FavoriteItemViewModel.class);
+        favoriteItemViewModel.init(this);
+        showMovieList();
+        showPeopleList();
 
-        favoriteMovieViewModel.getMovieList().observe(this, new Observer<List<Movie>>() {
+        favoriteItemViewModel.getMovieList().observe(this, new Observer<List<Movie>>() {
             @Override
             public void onChanged(List<Movie> movies) {
-                showRecyclerList();
+                showMovieList();
+            }
+        });
+        favoriteItemViewModel.getPeopleList().observe(this, new Observer<List<People>>() {
+            @Override
+            public void onChanged(List<People> people) {
+                showPeopleList();
             }
         });
     }
@@ -56,14 +82,14 @@ public class FavoriteActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        favoriteMovieViewModel.getAllMovieFromDb(this, favoriteMovieViewModel);
+        favoriteItemViewModel.getAllFavoriteItemFromDb(this, favoriteItemViewModel);
     }
 
-    private void showRecyclerList() {
-        List<Movie> movieList = favoriteMovieViewModel.getMovieList().getValue();
+    private void showMovieList() {
+        movieList = favoriteItemViewModel.getMovieList().getValue();
         tvFavoriteMovie.setVisibility(movieList.isEmpty() ? View.GONE : View.VISIBLE);
         rvFavoriteMovies.setVisibility(movieList.isEmpty() ? View.GONE : View.VISIBLE);
-        tvHaveFavorite.setVisibility(movieList.isEmpty() ? View.VISIBLE : View.GONE);
+        tvHaveFavorite.setVisibility(movieList.isEmpty() && peopleList.isEmpty() ? View.VISIBLE : View.GONE);
 
         FavoriteMovieAdapter movieListAdapter = new FavoriteMovieAdapter(movieList);
         rvFavoriteMovies.setLayoutManager(new LinearLayoutManager(this));
@@ -74,6 +100,26 @@ public class FavoriteActivity extends AppCompatActivity {
             public void onItemClicked(Movie data) {
                 Intent intent = new Intent(FavoriteActivity.this, MovieDetailsActivity.class);
                 intent.putExtra(MovieDetailsActivity.DATA, data);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void showPeopleList() {
+        peopleList = favoriteItemViewModel.getPeopleList().getValue();
+        tvFavoritePeople.setVisibility(peopleList.isEmpty() ? View.GONE : View.VISIBLE);
+        rvFavoritePeople.setVisibility(peopleList.isEmpty() ? View.GONE : View.VISIBLE);
+        tvHaveFavorite.setVisibility(movieList.isEmpty() && peopleList.isEmpty() ? View.VISIBLE : View.GONE);
+
+        FavoritePeopleAdapter peopleListAdapter = new FavoritePeopleAdapter(peopleList);
+        rvFavoritePeople.setLayoutManager(new LinearLayoutManager(this));
+        rvFavoritePeople.setAdapter(peopleListAdapter);
+
+        peopleListAdapter.setOnItemClickCallback(new FavoritePeopleAdapter.OnItemClickCallback() {
+            @Override
+            public void onItemClicked(People data) {
+                Intent intent = new Intent(FavoriteActivity.this, PeopleDetailsActivity.class);
+                intent.putExtra(PeopleDetailsActivity.DATA, data);
                 startActivity(intent);
             }
         });

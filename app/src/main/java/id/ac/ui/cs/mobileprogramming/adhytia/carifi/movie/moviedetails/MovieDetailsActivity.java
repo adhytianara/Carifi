@@ -16,8 +16,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.facebook.stetho.Stetho;
-import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +24,6 @@ import id.ac.ui.cs.mobileprogramming.adhytia.carifi.favorite.FavoriteActivity;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.model.Movie;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.viewmodel.MovieDetailsViewModel;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.profile.ProfileActivity;
-import okhttp3.OkHttpClient;
 
 public class MovieDetailsActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String DATA = "data";
@@ -56,9 +53,6 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
     @BindView(R.id.btn_favorite)
     Button btnFavorite;
 
-    @BindView(R.id.btn_share)
-    Button btnShare;
-
     @BindView(R.id.tv_overview)
     TextView tvOverview;
 
@@ -66,8 +60,6 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
-
-        initStetho();
 
         Movie data = getIntent().getParcelableExtra(DATA);
         setTitle(data.getTitle());
@@ -78,13 +70,6 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
         btnFavorite.setOnClickListener(this);
 
         diplayMovieData(data);
-    }
-
-    private void initStetho() {
-        Stetho.initializeWithDefaults(this);
-        new OkHttpClient.Builder()
-                .addNetworkInterceptor(new StethoInterceptor())
-                .build();
     }
 
     private void diplayMovieData(Movie data) {
@@ -122,7 +107,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
                 Intent favorite = new Intent(MovieDetailsActivity.this, FavoriteActivity.class);
                 startActivity(favorite);
                 break;
-            case R.id.menu_settings:
+            case R.id.menu_profile:
                 Intent profile = new Intent(MovieDetailsActivity.this, ProfileActivity.class);
                 startActivity(profile);
                 break;

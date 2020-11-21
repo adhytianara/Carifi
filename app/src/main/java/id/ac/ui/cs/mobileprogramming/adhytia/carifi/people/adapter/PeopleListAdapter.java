@@ -1,10 +1,9 @@
-package id.ac.ui.cs.mobileprogramming.adhytia.carifi.favorite.adapter;
+package id.ac.ui.cs.mobileprogramming.adhytia.carifi.people.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,14 +16,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.R;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.model.Movie;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.people.model.People;
 
-public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdapter.ListViewHolder> {
-    private List<Movie> listMovie;
+public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.ListViewHolder> {
+    private List<People> listPeople;
     private OnItemClickCallback onItemClickCallback;
 
-    public FavoriteMovieAdapter(List<Movie> list) {
-        this.listMovie = list;
+    public PeopleListAdapter(List<People> list) {
+        this.listPeople = list;
     }
 
     public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback) {
@@ -33,45 +32,35 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
 
     @NonNull
     @Override
-    public FavoriteMovieAdapter.ListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_row_favorite, viewGroup, false);
+    public PeopleListAdapter.ListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_row_homepage, viewGroup, false);
         return new ListViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final FavoriteMovieAdapter.ListViewHolder holder, int position) {
-
-        Movie movie = listMovie.get(position);
+    public void onBindViewHolder(@NonNull final PeopleListAdapter.ListViewHolder holder, int position) {
+        People people = listPeople.get(position);
         Glide.with(holder.itemView.getContext())
-                .load(movie.getPosterURL())
+                .load(people.getProfileURL())
                 .apply(new RequestOptions().override(200, 200))
-                .into(holder.moviePoster);
-
-        holder.tvTitle.setText(movie.getTitle());
-        holder.tvOverview.setText(movie.getOverview());
+                .into(holder.picture);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickCallback.onItemClicked(listMovie.get(holder.getAdapterPosition()));
+                onItemClickCallback.onItemClicked(listPeople.get(holder.getAdapterPosition()));
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return listMovie.size();
+        return listPeople.size();
     }
 
     public static class ListViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_picture)
-        ImageView moviePoster;
-
-        @BindView(R.id.tv_title)
-        TextView tvTitle;
-
-        @BindView(R.id.tv_overview)
-        TextView tvOverview;
+        ImageView picture;
 
         public ListViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -80,6 +69,6 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
     }
 
     public interface OnItemClickCallback {
-        void onItemClicked(Movie data);
+        void onItemClicked(People data);
     }
 }

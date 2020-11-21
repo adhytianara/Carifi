@@ -11,7 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_carifi_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".profile.ProfileActivity"></activity>
+        <activity android:name=".people.peopledetails.PeopleDetailsActivity"></activity>
+
+        <service
+            android:name=".people.service.FetchPeopleService"
+            android:exported="false" />
+
+        <activity android:name=".profile.ProfileActivity" />
         <activity android:name=".favorite.FavoriteActivity" />
         <activity android:name=".movie.moviedetails.MovieDetailsActivity" />
 

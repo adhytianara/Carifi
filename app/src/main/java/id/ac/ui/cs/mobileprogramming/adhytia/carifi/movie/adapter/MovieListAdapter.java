@@ -59,7 +59,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.List
     }
 
     public static class ListViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.iv_moviePoster)
+        @BindView(R.id.iv_picture)
         ImageView moviePoster;
 
         public ListViewHolder(@NonNull View itemView) {

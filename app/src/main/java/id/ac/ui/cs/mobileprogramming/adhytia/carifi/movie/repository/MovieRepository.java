@@ -12,7 +12,7 @@ import androidx.room.Room;
 import java.util.ArrayList;
 import java.util.List;
 
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.favorite.viewmodel.FavoriteMovieViewModel;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.favorite.viewmodel.FavoriteItemViewModel;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.database.MovieDao;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.database.MovieDatabase;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.model.Movie;
@@ -72,10 +72,10 @@ public class MovieRepository {
                 .movieDao();
     }
 
-    public List<Movie> getAllMovieFromDb(Activity mActivity, FavoriteMovieViewModel favoriteMovieViewModel) {
+    public List<Movie> getAllMovieFromDb(Activity mActivity, FavoriteItemViewModel favoriteItemViewModel) {
         initRoom(mActivity);
         List<Movie> movieList = movieDao.getAll();
-        favoriteMovieViewModel.setMovieList(movieList);
+        favoriteItemViewModel.setMovieList(movieList);
         return movieList;
     }
 
