@@ -5,20 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".moviepage.MovieFragment">
+    tools:context=".movie.MovieFragment">
 
     <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="50dp">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="50dp"
-            app:srcCompat="@drawable/essential_movies" />
+            app:srcCompat="@drawable/search_movies" />
 
         <SearchView
             android:id="@+id/search_view"

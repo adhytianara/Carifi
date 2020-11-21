@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#131313"
-    tools:context=".moviepage.activitydetails.MovieDetailsActivity">
+    tools:context=".movie.moviedetails.MovieDetailsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

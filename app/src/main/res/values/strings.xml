@@ -2,4 +2,16 @@
     <string name="app_name">Carifi</string>
     <string name="popular_movies">Popular movies</string>
     <string name="search_result_text">Your search result for </string>
+    <string name="title_favorite">Your Favorite</string>
+    <string name="release_date">"Release date: "</string>
+    <string name="popularity">"Popularity: "</string>
+    <string name="vote_average">"Vote average: "</string>
+    <string name="vote_count">"Vote count: "</string>
+    <string name="title_movie">Movies</string>
+    <string name="title_people">People</string>
+    <string name="title_tvshow">TvShow</string>
+    <string name="title_profile">Profile</string>
+    <string name="profile_data_saved">Your data has been saved</string>
+    <string name="picc_image_warning">You haven\'t picked Image</string>
+    <string name="something_went_wrong">Something went wrong</string>
 </resources>

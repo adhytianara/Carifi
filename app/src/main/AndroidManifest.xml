@@ -11,11 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_carifi_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".favoritepage.FavoriteActivity" />
-        <activity android:name=".moviepage.activitydetails.MovieDetailsActivity" />
+        <activity android:name=".profile.ProfileActivity"></activity>
+        <activity android:name=".favorite.FavoriteActivity" />
+        <activity android:name=".movie.moviedetails.MovieDetailsActivity" />
 
         <service
-            android:name=".moviepage.service.FetchAPIService"
+            android:name=".movie.service.FetchMovieService"
             android:exported="false" />
 
         <activity

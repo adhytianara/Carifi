@@ -1,24 +1,24 @@
 package id.ac.ui.cs.mobileprogramming.adhytia.carifi;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.favoritepage.FavoriteActivity;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.moviepage.MovieFragment;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.peoplepage.PeopleFragment;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.tvshowpage.TvShowFragment;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.favorite.FavoriteActivity;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.MovieFragment;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.people.PeopleFragment;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.profile.ProfileActivity;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.tvshow.TvShowFragment;
 
 public class HomeActivity extends AppCompatActivity {
     @BindView(R.id.bottom_navigation)
@@ -53,8 +53,8 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(favorite);
                 break;
             case R.id.menu_settings:
-//                Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
-//                startActivity(mIntent);
+                Intent profile = new Intent(HomeActivity.this, ProfileActivity.class);
+                startActivity(profile);
                 break;
         }
         return super.onOptionsItemSelected(item);
