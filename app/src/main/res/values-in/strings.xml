@@ -22,4 +22,12 @@
     <string name="save">Simpan</string>
     <string name="change_language">Tekan disini untuk mengganti bahasa</string>
     <string name="search_movies">Cari film</string>
+    <string name="search_popular_people">Cari tokoh terkenal</string>
+    <string name="popular_people">Tokoh terkenal</string>
+    <string name="gender">"Jenis Kelamin: "</string>
+    <string name="department">"Bidang: "</string>
+    <string name="female">"Perempuan"</string>
+    <string name="male">"Laki-laki"</string>
+    <string name="search_tv_show">Cari Acara Tv</string>
+    <string name="popular_tvshow">Acara Tv Populer</string>
 </resources>
