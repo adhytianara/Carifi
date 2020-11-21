@@ -1,4 +1,8 @@
-package id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.moviedetails;
+package id.ac.ui.cs.mobileprogramming.adhytia.carifi.tvshow.tvshowdetails;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,10 +14,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
@@ -21,13 +21,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.R;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.favorite.FavoriteActivity;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.model.Movie;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.movie.viewmodel.MovieDetailsViewModel;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.profile.ProfileActivity;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.tvshow.viewmodel.TvShowDetailsViewModel;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.tvshow.model.TvShow;
 
-public class MovieDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+public class TvShowDetailsActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String DATA = "data";
-    private MovieDetailsViewModel movieDetailsViewModel;
+    private TvShowDetailsViewModel tvShowDetailsViewModel;
 
     @BindView(R.id.img_backdrop)
     ImageView imgBackdrop;
@@ -36,7 +36,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
     ImageView imgPoster;
 
     @BindView(R.id.tv_name)
-    TextView tvTitle;
+    TextView tvName;
 
     @BindView(R.id.tv_release_date)
     TextView tvReleaseDate;
@@ -59,22 +59,22 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_details);
+        setContentView(R.layout.activity_tv_show_details);
 
-        Movie data = getIntent().getParcelableExtra(DATA);
-        setTitle(data.getTitle());
+        TvShow data = getIntent().getParcelableExtra(DATA);
+        setTitle(data.getName());
         ButterKnife.bind(this);
 
-        movieDetailsViewModel = ViewModelProviders.of(this).get(MovieDetailsViewModel.class);
-        movieDetailsViewModel.init(data, this);
+        tvShowDetailsViewModel = ViewModelProviders.of(this).get(TvShowDetailsViewModel.class);
+        tvShowDetailsViewModel.init(data, this);
         btnFavorite.setOnClickListener(this);
 
-        diplayMovieData(data);
+        diplayTvShowData(data);
     }
 
-    private void diplayMovieData(Movie data) {
-        boolean movieIsSaved = movieDetailsViewModel.isSaved();
-        btnFavorite.setBackgroundResource(movieIsSaved ? R.drawable.ic_favorite : R.drawable.ic_favorite_border);
+    private void diplayTvShowData(TvShow data) {
+        boolean tvShowIsSaved = tvShowDetailsViewModel.isSaved();
+        btnFavorite.setBackgroundResource(tvShowIsSaved ? R.drawable.ic_favorite : R.drawable.ic_favorite_border);
         Glide.with(this)
                 .load(data.getPosterURL())
                 .apply(new RequestOptions().override(200, 200))
@@ -84,8 +84,8 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
                 .apply(new RequestOptions().override(500, 500))
                 .into(imgBackdrop);
 
-        tvTitle.setText(data.getTitle());
-        tvReleaseDate.setText(String.format("%s%s", getString(R.string.release_date), data.getReleaseDate()));
+        tvName.setText(data.getName());
+        tvReleaseDate.setText(String.format("%s%s", getString(R.string.release_date), data.getFirstAirDate()));
         tvPopularity.setText(String.format("%s%s", getString(R.string.popularity), data.getPopularity()));
         tvVoteAvg.setText(String.format("%s%s", getString(R.string.vote_average), data.getVoteAverage()));
         tvVoteCount.setText(String.format("%s%s", getString(R.string.vote_count), data.getVoteCount()));
@@ -104,11 +104,11 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_favorite:
-                Intent favorite = new Intent(MovieDetailsActivity.this, FavoriteActivity.class);
+                Intent favorite = new Intent(TvShowDetailsActivity.this, FavoriteActivity.class);
                 startActivity(favorite);
                 break;
             case R.id.menu_profile:
-                Intent profile = new Intent(MovieDetailsActivity.this, ProfileActivity.class);
+                Intent profile = new Intent(TvShowDetailsActivity.this, ProfileActivity.class);
                 startActivity(profile);
                 break;
         }
@@ -119,11 +119,11 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_favorite:
-                if (movieDetailsViewModel.isSaved()) {
-                    movieDetailsViewModel.deleteMovieByMovieId(this);
+                if (tvShowDetailsViewModel.isSaved()) {
+                    tvShowDetailsViewModel.deleteTvShowByTvShowId(this);
                     btnFavorite.setBackgroundResource(R.drawable.ic_favorite_border);
                 } else {
-                    movieDetailsViewModel.saveMovietoDb(this);
+                    tvShowDetailsViewModel.saveTvShowtoDb(this);
                     btnFavorite.setBackgroundResource(R.drawable.ic_favorite);
                 }
                 break;

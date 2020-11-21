@@ -11,7 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_carifi_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".people.peopledetails.PeopleDetailsActivity"></activity>
+        <activity android:name=".tvshow.tvshowdetails.TvShowDetailsActivity"></activity>
+
+        <service
+            android:name=".tvshow.service.FetchTvShowService"
+            android:exported="false" />
+
+        <activity android:name=".people.peopledetails.PeopleDetailsActivity" />
 
         <service
             android:name=".people.service.FetchPeopleService"

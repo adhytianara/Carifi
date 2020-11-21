@@ -67,7 +67,7 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
         @BindView(R.id.iv_picture)
         ImageView moviePoster;
 
-        @BindView(R.id.tv_title)
+        @BindView(R.id.tv_name)
         TextView tvTitle;
 
         @BindView(R.id.tv_overview)

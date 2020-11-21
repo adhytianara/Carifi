@@ -28,4 +28,7 @@
     <string name="department">"Department: "</string>
     <string name="female">"Female"</string>
     <string name="male">"Male"</string>
+    <string name="search_tv_show">Search TvShow</string>
+    <string name="popular_tvshow">Popular TvShow</string>
+    <string name="popular_TvShow">Popular TvShow</string>
 </resources>

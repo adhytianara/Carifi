@@ -58,7 +58,7 @@ public class FetchMovieService extends IntentService {
 
     private void fetchMoviesByTitle(String title) {
         SyncHttpClient client = new SyncHttpClient();
-        String url = "https://api.themoviedb.org/3/search/movie?api_key=33802d494b8327ab4203e3260d36ea10&language=en-US&query=" + title + "&page=1&include_adult=false";
+        String url = "https://api.themoviedb.org/3/search/movie?api_key=33802d494b8327ab4203e3260d36ea10&language=en-US&query=" + title + "&page=1";
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

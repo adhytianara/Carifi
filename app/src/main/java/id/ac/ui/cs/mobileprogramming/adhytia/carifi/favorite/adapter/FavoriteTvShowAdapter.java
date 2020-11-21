@@ -17,14 +17,17 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.R;
-import id.ac.ui.cs.mobileprogramming.adhytia.carifi.people.model.People;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.tvshow.model.TvShow;
 
-public class FavoritePeopleAdapter extends RecyclerView.Adapter<FavoritePeopleAdapter.ListViewHolder> {
-    private List<People> listPeople;
+import static com.loopj.android.http.AsyncHttpClient.log;
+
+public class FavoriteTvShowAdapter extends RecyclerView.Adapter<FavoriteTvShowAdapter.ListViewHolder> {
+    private List<TvShow> listTvShow;
     private OnItemClickCallback onItemClickCallback;
 
-    public FavoritePeopleAdapter(List<People> list) {
-        this.listPeople = list;
+    public FavoriteTvShowAdapter(List<TvShow> list) {
+        log.e("DEasdBUG", String.valueOf(list.size()));
+        this.listTvShow = list;
     }
 
     public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback) {
@@ -33,41 +36,47 @@ public class FavoritePeopleAdapter extends RecyclerView.Adapter<FavoritePeopleAd
 
     @NonNull
     @Override
-    public FavoritePeopleAdapter.ListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+    public FavoriteTvShowAdapter.ListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_row_favorite, viewGroup, false);
         return new ListViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final FavoritePeopleAdapter.ListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final FavoriteTvShowAdapter.ListViewHolder holder, int position) {
 
-        People people = listPeople.get(position);
+        TvShow tvShow = listTvShow.get(position);
         Glide.with(holder.itemView.getContext())
-                .load(people.getProfileURL())
+                .load(tvShow.getPosterURL())
                 .apply(new RequestOptions().override(200, 200))
-                .into(holder.peoplePicture);
+                .into(holder.tvShowPoster);
 
-        holder.tvTitle.setText(people.getName());
+        log.e("DEBUG", String.valueOf(tvShow.getName()));
+
+        holder.tvName.setText(tvShow.getName());
+        holder.tvOverview.setText(tvShow.getOverview());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickCallback.onItemClicked(listPeople.get(holder.getAdapterPosition()));
+                onItemClickCallback.onItemClicked(listTvShow.get(holder.getAdapterPosition()));
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return listPeople.size();
+        return listTvShow.size();
     }
 
     public static class ListViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_picture)
-        ImageView peoplePicture;
+        ImageView tvShowPoster;
 
         @BindView(R.id.tv_name)
-        TextView tvTitle;
+        TextView tvName;
+
+        @BindView(R.id.tv_overview)
+        TextView tvOverview;
 
         public ListViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -76,6 +85,6 @@ public class FavoritePeopleAdapter extends RecyclerView.Adapter<FavoritePeopleAd
     }
 
     public interface OnItemClickCallback {
-        void onItemClicked(People data);
+        void onItemClicked(TvShow data);
     }
 }
