@@ -128,7 +128,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             }
 
         } else {
-            Toast.makeText(ProfileActivity.this, R.string.picc_image_warning, Toast.LENGTH_LONG).show();
+            Toast.makeText(ProfileActivity.this, R.string.pick_image_warning, Toast.LENGTH_LONG).show();
         }
     }
 }

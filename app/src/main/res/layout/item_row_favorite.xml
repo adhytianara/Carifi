@@ -27,7 +27,7 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            tools:text="TextView"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -39,7 +39,7 @@
             android:layout_marginTop="20dp"
             android:ellipsize="end"
             android:maxLines="4"
-            android:text="TextV iew"
+            tools:text="TextV iew"
             android:textColor="@android:color/white" />
     </LinearLayout>
 </LinearLayout>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:orientation="vertical"
         android:paddingTop="30dp"
@@ -30,7 +29,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="30dp"
-            android:text="TextView"
+            tools:text="TextView"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -52,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -65,7 +64,7 @@
                         android:id="@+id/btn_favorite"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
                         android:background="@drawable/ic_favorite_border"
                         tools:src="@android:color/darker_gray" />
 
@@ -73,7 +72,7 @@
                         android:id="@+id/btn_share"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginEnd="20dp"
                         android:background="@drawable/ic_share"
                         tools:src="@android:color/darker_gray" />
                 </LinearLayout>
@@ -82,7 +81,7 @@
                     android:id="@+id/tv_release_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
+                    tools:text="TextView"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -91,7 +90,7 @@
                     android:id="@+id/tv_popularity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Popularity: "
+                    tools:text="Popularity: "
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -100,7 +99,7 @@
                     android:id="@+id/tv_vote_avg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Vote average: "
+                    tools:text="Vote average: "
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -109,7 +108,7 @@
                     android:id="@+id/tv_vote_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Vote Count: "
+                    tools:text="Vote Count: "
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -124,7 +123,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="20dp"
-            android:text="TextView"
+            tools:text="TextView"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
     </LinearLayout>

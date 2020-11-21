@@ -29,7 +29,7 @@
             android:layout_marginEnd="20dp"
             android:background="@android:color/white"
             android:iconifiedByDefault="false"
-            android:queryHint="Search movies" />
+            android:queryHint="@string/search_movies" />
     </FrameLayout>
 
     <TextView
@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:text="Popular movies"
+        android:text="@string/popular_movies"
         android:textColor="@android:color/white"
         android:textSize="20sp" />
 

@@ -4,13 +4,13 @@
     <item
         android:id="@+id/nav_movie"
         android:icon="@drawable/ic_movies"
-        android:title="Movie" />
+        android:title="@string/title_movie" />
     <item
         android:id="@+id/nav_tvShow"
         android:icon="@drawable/ic_tv"
-        android:title="Tv Show" />
+        android:title="@string/title_tvshow" />
     <item
         android:id="@+id/nav_people"
         android:icon="@drawable/ic_people"
-        android:title="People" />
+        android:title="@string/title_people" />
 </menu>

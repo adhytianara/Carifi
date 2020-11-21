@@ -12,6 +12,14 @@
     <string name="title_tvshow">TvShow</string>
     <string name="title_profile">Profile</string>
     <string name="profile_data_saved">Your data has been saved</string>
-    <string name="picc_image_warning">You haven\'t picked Image</string>
+    <string name="pick_image_warning">You haven\'t picked Image</string>
     <string name="something_went_wrong">Something went wrong</string>
+    <string name="empty_favorite_item">You don\'t have any favorite item yet</string>
+    <string name="favorite_movie">Favorite Movie</string>
+    <string name="favorite_tvshow">Favorite TvShow</string>
+    <string name="favorite_people">Favorite People</string>
+    <string name="your_name">Your name</string>
+    <string name="save">Save</string>
+    <string name="change_language">Click here to change your language</string>
+    <string name="search_movies">Search movies</string>
 </resources>

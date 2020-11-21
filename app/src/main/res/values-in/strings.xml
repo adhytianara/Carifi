@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Carifi</string>
+    <string name="popular_movies">Film populer</string>
+    <string name="search_result_text">Hasil pencarian kamu untuk </string>
+    <string name="title_favorite">Favorit kamu</string>
+    <string name="release_date">"Tanggal rilis: "</string>
+    <string name="popularity">"Kepopuleran: "</string>
+    <string name="vote_average">"Voting rata-rata: "</string>
+    <string name="vote_count">"Jumlah voting: "</string>
+    <string name="title_movie">Film</string>
+    <string name="title_people">Tokoh</string>
+    <string name="title_tvshow">Acara Tv</string>
+    <string name="title_profile">Profil</string>
+    <string name="profile_data_saved">Data kamu berhasil disimpan</string>
+    <string name="pick_image_warning">Kamu belum memilih foto</string>
+    <string name="something_went_wrong">Terjadi kesalahan</string>
+    <string name="empty_favorite_item">Kamu belum punya item favorit</string>
+    <string name="favorite_movie">Film Favorit</string>
+    <string name="favorite_tvshow">Acara Tv Favorit</string>
+    <string name="favorite_people">Tokoh Favorit</string>
+    <string name="your_name">Nama kamu</string>
+    <string name="save">Simpan</string>
+    <string name="change_language">Tekan disini untuk mengganti bahasa</string>
+    <string name="search_movies">Cari film</string>
+</resources>
