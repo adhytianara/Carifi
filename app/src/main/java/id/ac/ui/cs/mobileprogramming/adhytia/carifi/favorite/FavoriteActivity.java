@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -51,9 +52,9 @@ public class FavoriteActivity extends AppCompatActivity {
     @BindView(R.id.tv_favorite_people)
     TextView tvFavoritePeople;
 
-    private List<Movie> movieList;
-    private List<People> peopleList;
-    private List<TvShow> tvShowList;
+    private List<Movie> movieList = new ArrayList<>();
+    private List<People> peopleList = new ArrayList<>();
+    private List<TvShow> tvShowList = new ArrayList<>();
 
     private FavoriteItemViewModel favoriteItemViewModel;
 

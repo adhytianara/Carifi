@@ -88,12 +88,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         switch (v.getId()) {
             case R.id.btn_save:
                 profileViewModel.saveUserName(this, etName.getText().toString());
-
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                selectedImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                byte[] b = baos.toByteArray();
-                String encoded = Base64.encodeToString(b, Base64.DEFAULT);
-                profileViewModel.saveAvatar(this, encoded);
+                if (selectedImage != null) {
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    selectedImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                    byte[] b = baos.toByteArray();
+                    String encoded = Base64.encodeToString(b, Base64.DEFAULT);
+                    profileViewModel.saveAvatar(this, encoded);
+                }
                 Toast.makeText(this, R.string.profile_data_saved, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.iv_avatar:
