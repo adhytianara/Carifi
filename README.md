@@ -1,5 +1,8 @@
 # Carifi
-Carifi adalah aplikasi berbasis mobile yang membantu pengguna dalam mencari berbagai informasi mengenai dunia perfilman
+Carifi adalah aplikasi berbasis mobile yang membantu pengguna dalam mencari berbagai informasi mengenai dunia perfilman.  
+
+<a href="https://play.google.com/store/apps/details?id=id.ac.ui.cs.mobileprogramming.adhytia.carifi" title="Get it on Google Play"><img src="screenshot/Feature graphic.png"></a>
+#### Unduh aplikasi Carifi <a href="https://play.google.com/store/apps/details?id=id.ac.ui.cs.mobileprogramming.adhytia.carifi" ><b>disini</b></a>
 
 ## Author
 Muhamad Adhytia Wana Putra Rahmadhan <br>
@@ -19,8 +22,8 @@ Mobile Programming - A <br>
 ## Screenshots
 
 [<img src="screenshot/popular_movies.jpg" alt="Popular Movies" width="30%" />](screenshot/popular_movies.jpg)
-[<img src="screenshot/popular_people.jpg" alt="Popular Movies" width="30%" />](screenshot/popular_people.jpg)
-[<img src="screenshot/search_avengers.jpg" alt="Popular Movies" width="30%" />](screenshot/search_avengers.jpg)
-[<img src="screenshot/avengers_details.jpg" alt="Popular Movies" width="30%" />](screenshot/avengers_details.jpg)
-[<img src="screenshot/favorite.jpg" alt="Popular Movies" width="30%" />](screenshot/favorite.jpg)
-[<img src="screenshot/profile.jpg" alt="Popular Movies" width="30%" />](screenshot/profile.jpg)
+[<img src="screenshot/popular_people.jpg" alt="Popular People" width="30%" />](screenshot/popular_people.jpg)
+[<img src="screenshot/search_avengers.jpg" alt="Search" width="30%" />](screenshot/search_avengers.jpg)
+[<img src="screenshot/avengers_details.jpg" alt="Details" width="30%" />](screenshot/avengers_details.jpg)
+[<img src="screenshot/favorite.jpg" alt="Favorite" width="30%" />](screenshot/favorite.jpg)
+[<img src="screenshot/profile.jpg" alt="Profile" width="30%" />](screenshot/profile.jpg)
