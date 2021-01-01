@@ -30,4 +30,6 @@
     <string name="male">"Laki-laki"</string>
     <string name="search_tv_show">Cari Acara Tv</string>
     <string name="popular_tvshow">Acara Tv Populer</string>
+    <string name="notif_content_title">Bosen?</string>
+    <string name="notif_content_text">Yuk cari film kesukaan kamu!</string>
 </resources>

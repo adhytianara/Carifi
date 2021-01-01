@@ -30,4 +30,6 @@
     <string name="male">"Male"</string>
     <string name="search_tv_show">Search TvShow</string>
     <string name="popular_tvshow">Popular TvShow</string>
+    <string name="notif_content_title">Bored?</string>
+    <string name="notif_content_text">Let\'s find your favorite movie!</string>
 </resources>

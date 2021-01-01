@@ -1,6 +1,13 @@
 package id.ac.ui.cs.mobileprogramming.adhytia.carifi;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -8,6 +15,7 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -21,6 +29,11 @@ import id.ac.ui.cs.mobileprogramming.adhytia.carifi.profile.ProfileActivity;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.tvshow.TvShowFragment;
 
 public class HomeActivity extends AppCompatActivity {
+    private static final int NOTIFICATION_ID = 1;
+    private static final String CHANNEL_ID = "channel_01";
+    private static final CharSequence CHANNEL_NAME = "carifi channel";
+    private static boolean notifAlreadyCreated = false;
+
     @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNav;
 
@@ -84,4 +97,59 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (!notifAlreadyCreated) {
+            notifAlreadyCreated = true;
+            countdownNotif();
+        }
+    }
+
+    private void countdownNotif() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(10000);
+                    sendNotification();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    public void sendNotification() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentIntent(pendingIntent)
+                .setSmallIcon(R.drawable.ic_favorite)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_carifi))
+                .setContentTitle(getString(R.string.notif_content_title))
+                .setContentText(getString(R.string.notif_content_text))
+                .setAutoCancel(true);
+
+        /*
+        Untuk android Oreo ke atas perlu menambahkan notification channel
+        */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription(CHANNEL_NAME.toString());
+
+            mBuilder.setChannelId(CHANNEL_ID);
+            if (mNotificationManager != null) {
+                mNotificationManager.createNotificationChannel(channel);
+            }
+        }
+        Notification notification = mBuilder.build();
+
+        if (mNotificationManager != null) {
+            mNotificationManager.notify(NOTIFICATION_ID, notification);
+        }
+    }
 }
