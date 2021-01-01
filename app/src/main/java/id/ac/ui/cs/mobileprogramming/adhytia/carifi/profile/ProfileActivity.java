@@ -38,6 +38,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     @BindView(R.id.et_Name)
     EditText etName;
 
+    @BindView(R.id.tv_hello)
+    TextView tvHello;
+
     @BindView(R.id.btn_save)
     Button btnSave;
 
@@ -49,6 +52,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     private ProfileViewModel profileViewModel;
     private Bitmap selectedImage;
+
+    static {
+        System.loadLibrary("HelloNameJni");
+    }
+
+    private native String getNativeString(String string);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +83,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         String name = user.getName();
         etName.setText(name);
 
+        tvHello.setText(getNativeString(name));
+
         String encoded = user.getAvatarBase64();
         byte[] imageAsBytes = Base64.decode(encoded.getBytes(), Base64.DEFAULT);
         selectedImage = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
@@ -87,7 +98,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_save:
-                profileViewModel.saveUserName(this, etName.getText().toString());
+                String name = etName.getText().toString();
+                profileViewModel.saveUserName(this, name);
                 if (selectedImage != null) {
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     selectedImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
@@ -95,6 +107,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     String encoded = Base64.encodeToString(b, Base64.DEFAULT);
                     profileViewModel.saveAvatar(this, encoded);
                 }
+                tvHello.setText(getNativeString(name));
                 Toast.makeText(this, R.string.profile_data_saved, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.iv_avatar:
