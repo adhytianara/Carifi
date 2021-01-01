@@ -99,15 +99,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         switch (v.getId()) {
             case R.id.btn_save:
                 String name = etName.getText().toString();
-                profileViewModel.saveUserName(this, name);
-                if (selectedImage != null) {
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    selectedImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                    byte[] b = baos.toByteArray();
-                    String encoded = Base64.encodeToString(b, Base64.DEFAULT);
-                    profileViewModel.saveAvatar(this, encoded);
-                }
                 tvHello.setText(getNativeString(name));
+                saveData(name);
                 Toast.makeText(this, R.string.profile_data_saved, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.iv_avatar:
@@ -120,6 +113,26 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
                 startActivity(mIntent);
                 break;
+        }
+    }
+
+    private void saveData(final String name) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                saveDatatoSharedPref(name);
+            }
+        }).start();
+    }
+
+    private void saveDatatoSharedPref(String name) {
+        profileViewModel.saveUserName(this, name);
+        if (selectedImage != null) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            selectedImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            byte[] b = baos.toByteArray();
+            String encoded = Base64.encodeToString(b, Base64.DEFAULT);
+            profileViewModel.saveAvatar(this, encoded);
         }
     }
 
