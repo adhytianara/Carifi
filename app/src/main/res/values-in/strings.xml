@@ -32,4 +32,7 @@
     <string name="popular_tvshow">Acara Tv Populer</string>
     <string name="notif_content_title">Bosen?</string>
     <string name="notif_content_text">Yuk cari film kesukaan kamu!</string>
+    <string name="connectivity_status">Anda sedang offline</string>
+    <string name="check_your_internet_connection">Periksa koneksi internet Anda dan coba lagi</string>
+    <string name="try_again">coba lagi</string>
 </resources>

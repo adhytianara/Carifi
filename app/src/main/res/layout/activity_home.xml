@@ -8,6 +8,45 @@
     tools:context=".HomeActivity">
 
 
+    <LinearLayout
+        android:id="@+id/layout_connectivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/connectivity_status"
+            android:textColor="@android:color/white"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/check_your_internet_connection"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btn_connectivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/colorAccent"
+            android:drawableLeft="@drawable/ic_refresh"
+            android:drawablePadding="10dp"
+            android:paddingHorizontal="40dp"
+            android:text="@string/try_again"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"

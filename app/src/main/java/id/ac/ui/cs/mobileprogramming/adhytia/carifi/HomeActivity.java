@@ -7,11 +7,17 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +34,7 @@ import id.ac.ui.cs.mobileprogramming.adhytia.carifi.people.PeopleFragment;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.profile.ProfileActivity;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.tvshow.TvShowFragment;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int NOTIFICATION_ID = 1;
     private static final String CHANNEL_ID = "channel_01";
     private static final CharSequence CHANNEL_NAME = "carifi channel";
@@ -37,6 +43,15 @@ public class HomeActivity extends AppCompatActivity {
     @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNav;
 
+    @BindView(R.id.layout_connectivity)
+    LinearLayout layoutConnectivity;
+
+    @BindView(R.id.btn_connectivity)
+    Button btnConnectivity;
+
+    @BindView(R.id.fragment_container)
+    FrameLayout frameLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +59,11 @@ public class HomeActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, new MovieFragment())
-                .commit();
+        btnConnectivity.setOnClickListener(this);
+
+        if (isConnected()) {
+            diplayContent();
+        }
     }
 
     @Override
@@ -77,26 +93,70 @@ public class HomeActivity extends AppCompatActivity {
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = null;
-                    switch (item.getItemId()) {
-                        case R.id.nav_movie:
-                            selectedFragment = new MovieFragment();
-                            break;
-                        case R.id.nav_tvShow:
-                            selectedFragment = new TvShowFragment();
-                            break;
-                        case R.id.nav_people:
-                            selectedFragment = new PeopleFragment();
-                            break;
-                    }
+                    if (isConnected()) {
+                        frameLayout.setVisibility(View.VISIBLE);
+                        Fragment selectedFragment = null;
+                        switch (item.getItemId()) {
+                            case R.id.nav_movie:
+                                selectedFragment = new MovieFragment();
+                                break;
+                            case R.id.nav_tvShow:
+                                selectedFragment = new TvShowFragment();
+                                break;
+                            case R.id.nav_people:
+                                selectedFragment = new PeopleFragment();
+                                break;
+                        }
 
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.fragment_container, selectedFragment)
-                            .commit();
-                    return true;
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragment_container, selectedFragment)
+                                .commit();
+                        return true;
+                    } else {
+                        frameLayout.setVisibility(View.GONE);
+                    }
+                    return false;
                 }
             };
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_connectivity:
+                if (isConnected()) {
+                    diplayContent();
+                    frameLayout.setVisibility(View.VISIBLE);
+                } else {
+                    frameLayout.setVisibility(View.GONE);
+                }
+                break;
+        }
+    }
+
+    private void diplayContent() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, new MovieFragment())
+                .commit();
+    }
+
+    private boolean isConnected() {
+        ConnectivityManager cm =
+                (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
+        if (isConnected) {
+            layoutConnectivity.setVisibility(View.GONE);
+        } else {
+            layoutConnectivity.setVisibility(View.VISIBLE);
+        }
+        return isConnected;
+    }
+
 
     @Override
     protected void onStop() {
