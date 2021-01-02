@@ -35,4 +35,7 @@
     <string name="connectivity_status">Anda sedang offline</string>
     <string name="check_your_internet_connection">Periksa koneksi internet Anda dan coba lagi</string>
     <string name="try_again">coba lagi</string>
+    <string name="permission_is_required">Izin dibutuhkan</string>
+    <string name="require_permission_explanation">Untuk mendapatkan foto profil melalui kamera, aplikasi ini membutuhkan persetujuan penggunaan kamera</string>
+    <string name="back">Kembali</string>
 </resources>

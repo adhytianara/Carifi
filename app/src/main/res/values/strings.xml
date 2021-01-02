@@ -35,4 +35,7 @@
     <string name="connectivity_status">You are offline</string>
     <string name="check_your_internet_connection">Please check your internet connection and try again</string>
     <string name="try_again">try again</string>
+    <string name="permission_is_required">Permission is required</string>
+    <string name="require_permission_explanation">In order to get your profile picture through camera, this app require camera permission</string>
+    <string name="back">Back</string>
 </resources>
