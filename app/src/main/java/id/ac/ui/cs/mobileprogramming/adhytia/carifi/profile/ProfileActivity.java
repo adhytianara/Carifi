@@ -30,6 +30,7 @@ import java.io.InputStream;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.R;
+import id.ac.ui.cs.mobileprogramming.adhytia.carifi.opengl.OpenGLActivity;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.profile.model.User;
 import id.ac.ui.cs.mobileprogramming.adhytia.carifi.profile.viewmodel.ProfileViewModel;
 
@@ -47,6 +48,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     @BindView(R.id.tv_hello)
     TextView tvHello;
+
+    @BindView(R.id.tv_opengl)
+    TextView tvOpengl;
 
     @BindView(R.id.btn_save)
     Button btnSave;
@@ -83,6 +87,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         btnSave.setOnClickListener(this);
         btnChangeLanguage.setOnClickListener(this);
         tvChangeLanguage.setOnClickListener(this);
+        tvOpengl.setOnClickListener(this);
         btnCamera.setOnClickListener(this);
         btnGallery.setOnClickListener(this);
 
@@ -124,6 +129,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.btn_camera:
                 askPermission();
+                break;
+            case R.id.tv_opengl:
+                Intent opengl = new Intent(this, OpenGLActivity.class);
+                startActivity(opengl);
                 break;
             case R.id.btn_change_language:
             case R.id.tv_change_language:
